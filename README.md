@@ -3,6 +3,14 @@
 Combines Jake Van Clief's ICM folder-as-architecture with patterns extracted
 from Claude Code's March 2026 source leak and current best practices.
 
+> **Command Center workspace** (`workspaces/command-center/`) — a multi-repo hub
+> that is the durable memory + correct filing cabinet for every repo in the account.
+> A `@field-agent` in each repo performs edits and relays a Field Report; the
+> `@curator` (which works only in the hub) files each report into
+> `projects/<repo>/`, creating domain folders (SEO, analytics, security…) on demand.
+> Drive it with `/project:relay-report` and `/project:file-report`. See that
+> workspace's `CONTEXT.md`.
+
 ---
 
 ## The Token Efficiency Stack (How You Hit Near-Zero)

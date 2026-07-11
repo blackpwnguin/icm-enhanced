@@ -1,0 +1,59 @@
+# Field Agent relay — install into a TRACKED repo at .github/workflows/icm-relay.yml
+# On push to the default branch, drafts a Field Report from the commit and opens a PR
+# on the hub adding it to workspaces/command-center/stages/01-intake/output/.
+# Requires repo secret ICM_RELAY_TOKEN (PAT with contents+pull_requests write on
+# blackpwnguin/icm-enhanced). Without it the step no-ops.
+name: icm-relay
+on:
+  push:
+    branches: [main, master]
+permissions:
+  contents: read
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+      - name: Guard — token present?
+        id: guard
+        run: |
+          if [ -z "${{ secrets.ICM_RELAY_TOKEN }}" ]; then
+            echo "No ICM_RELAY_TOKEN — skipping relay."; echo "ok=false" >> "$GITHUB_OUTPUT"
+          else echo "ok=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Draft report
+        if: steps.guard.outputs.ok == 'true'
+        id: draft
+        run: |
+          set -euo pipefail
+          REPO="${{ github.repository }}"; SLUG="$(echo "$REPO" | tr '/' '-')"
+          DATE="$(date -u +%F)"; SHA="${{ github.sha }}"; SHORT="${SHA:0:7}"
+          ID="${SLUG}-${DATE}-${SHORT}"
+          FILES="$(git diff --name-only HEAD~1 HEAD | head -40 | sed 's/^/    - /')"
+          SUMMARY="$(git log -1 --pretty=%s)"
+          DEST="workspaces/command-center/stages/01-intake/output/${DATE}__${SLUG}__${SHORT}.md"
+          echo "dest=$DEST" >> "$GITHUB_OUTPUT"; echo "id=$ID" >> "$GITHUB_OUTPUT"
+          echo "branch=report/${DATE}-${SLUG}-${SHORT}" >> "$GITHUB_OUTPUT"
+          {
+            printf -- '---\nid: %s\nrepo: %s\ndate: %s\nauthor: field-agent\nneeds_human: false\n---\n' "$ID" "$REPO" "$DATE"
+            printf '## Summary\n%s\n\n## Changes\n- kind: change\n  summary: %s\n  files:\n%s\n  tags: []\n  detail: Auto-drafted from commit %s.\n\n## Links\n- commit: %s\n' "$SUMMARY" "$SUMMARY" "$FILES" "$SHORT" "$SHA"
+          } > /tmp/report.md
+      - name: Open PR on hub
+        if: steps.guard.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.ICM_RELAY_TOKEN }}
+          HUB: blackpwnguin/icm-enhanced
+        run: |
+          set -euo pipefail
+          TMP="$(mktemp -d)"
+          git clone --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${HUB}.git" "$TMP/hub"
+          cd "$TMP/hub"; git checkout -b "${{ steps.draft.outputs.branch }}"
+          mkdir -p "$(dirname "${{ steps.draft.outputs.dest }}")"
+          cp /tmp/report.md "${{ steps.draft.outputs.dest }}"
+          git config user.name icm-field-agent
+          git config user.email icm-field-agent@users.noreply.github.com
+          git add -A && git commit -m "relay: field report ${{ steps.draft.outputs.id }}"
+          git push -u origin "${{ steps.draft.outputs.branch }}"
+          gh pr create --repo "$HUB" --base master --head "${{ steps.draft.outputs.branch }}" \
+            --title "[icm-report] ${{ steps.draft.outputs.id }}" \
+            --body "Automated Field Report from ${{ github.repository }}. Merge, then run /project:file-report."
