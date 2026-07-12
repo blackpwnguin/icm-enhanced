@@ -20,7 +20,7 @@ jobs:
         run: '[ -f package.json ] && echo "yes=true" >> "$GITHUB_OUTPUT" || echo "yes=false" >> "$GITHUB_OUTPUT"'
       - uses: actions/setup-node@v4
         if: steps.node.outputs.yes == 'true'
-        with: { node-version: 20, cache: npm }
+        with: { node-version: 20 }   # no cache: npm — it errors when a repo has no lockfile
       - name: Node install + build + test
         if: steps.node.outputs.yes == 'true'
         # --legacy-peer-deps so peer-dependency conflicts (common in React 19 apps)
