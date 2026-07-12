@@ -10,7 +10,11 @@ command-center and get filed by the Curator.
   field-agent.md      the Field Agent manual
 .github/workflows/
   icm-relay.yml        on push to main → draft report → PR it to the hub
+  ci.yml               (optional) portable CI: auto-detects Node/Python/Go, build+test
 ```
+
+Copy `ci.yml` from this kit into the target repo's `.github/workflows/` to give any
+project the same CI dev-pipeline. It's stack-agnostic and additive.
 
 ## Install (from inside the target repo)
 ```bash
