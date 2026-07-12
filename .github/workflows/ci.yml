@@ -1,7 +1,7 @@
 # CI — ICM convention validation. Runs on every push/PR.
 # Enforces the structural conventions this repo is built on so drift can't merge:
 #   - every CONTEXT.md is a router under 80 lines
-#   - every reference file under 200 lines
+#   - every authored reference file under 200 lines (imported */vault/* copies are exempt)
 #   - the repo's own validate scripts pass (if executable)
 name: ci
 on:
@@ -32,7 +32,7 @@ jobs:
             case "$f" in */CONTEXT.md) continue;; esac
             n=$(wc -l < "$f")
             if [ "$n" -gt 200 ]; then echo "::error file=$f::$n lines (max 200)"; fail=1; fi
-          done < <(find workspaces -type f \( -name '*.md' \) -not -path './.git/*')
+          done < <(find workspaces -type f \( -name '*.md' \) -not -path './.git/*' -not -path '*/vault/*')
           exit $fail
 
       - name: Run repo validate scripts if present
