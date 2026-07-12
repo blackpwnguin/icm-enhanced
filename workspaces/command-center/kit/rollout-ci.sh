@@ -20,6 +20,8 @@ MODE="pr"
 
 for arg in "$@"; do
   case "$arg" in
+    \#*) break ;;            # a pasted "# comment" token — ignore it and the rest
+    ''|--) continue ;;
     --direct)  MODE="direct" ;;
     --dry-run) MODE="dry" ;;
     *) echo "unknown arg: $arg" >&2; exit 2 ;;
