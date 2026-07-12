@@ -7,7 +7,7 @@ reporting). `tracked: no` = ignore (forks/coursework). Generated 2026-07-11.
 | Repo | Visibility | Last push | Status | Tracked |
 |------|-----------|-----------|--------|---------|
 | blackpwnguin/nihilo | public | 2026-07-11 | scaffolded | yes |
-| blackpwnguin/stowed | private | 2026-07-11 | pending | yes |
+| blackpwnguin/stowed | private | 2026-07-11 | scaffolded | yes |
 | blackpwnguin/knowledge-vault | private | 2026-06-25 | pending | yes |
 | blackpwnguin/Claude-agent-dashboard | public | 2026-06-25 | pending | yes |
 | blackpwnguin/Project-Manager | public | 2026-05-13 | pending | yes |
