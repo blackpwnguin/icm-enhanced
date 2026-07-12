@@ -1,0 +1,43 @@
+# CI — ICM convention validation. Runs on every push/PR.
+# Enforces the structural conventions this repo is built on so drift can't merge:
+#   - every CONTEXT.md is a router under 80 lines
+#   - every reference file under 200 lines
+#   - the repo's own validate scripts pass (if executable)
+name: ci
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['**']
+
+jobs:
+  icm-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: CONTEXT.md files must be <= 80 lines
+        run: |
+          fail=0
+          while IFS= read -r f; do
+            n=$(wc -l < "$f")
+            if [ "$n" -gt 80 ]; then echo "::error file=$f::CONTEXT.md is $n lines (max 80)"; fail=1; fi
+          done < <(find . -name CONTEXT.md -not -path './.git/*')
+          exit $fail
+
+      - name: Reference/config/schema files must be <= 200 lines
+        run: |
+          fail=0
+          while IFS= read -r f; do
+            case "$f" in */CONTEXT.md) continue;; esac
+            n=$(wc -l < "$f")
+            if [ "$n" -gt 200 ]; then echo "::error file=$f::$n lines (max 200)"; fail=1; fi
+          done < <(find workspaces -type f \( -name '*.md' \) -not -path './.git/*')
+          exit $fail
+
+      - name: Run repo validate scripts if present
+        run: |
+          for s in scripts/validate-icm-read.sh scripts/validate-icm-write.sh; do
+            if [ -x "$s" ]; then echo "→ $s"; "$s" || exit 1; fi
+          done
+          echo "validation complete"
