@@ -15,6 +15,7 @@ Obsidian-vault knowledge for this project is copied under `vault/`.
 | `overview.md` | what it is, stack, live Status |
 | `architecture.md` | how it's set up (iOS + Supabase + web) |
 | `domains/` | `seo/`, `analytics/` (created 2026-07-12) |
+| `ship-plan.md` | App Store ship checklist (mirror of repo `docs/SHIP_PLAN.md`) |
 | `change-log.md` | project-wide timeline |
 | `recommendations.md` | prioritized backlog (from the 2026-07-03 product review) |
 | `research.md` | market/competitive research |
