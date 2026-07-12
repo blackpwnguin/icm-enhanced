@@ -16,6 +16,18 @@ command-center and get filed by the Curator.
 Copy `ci.yml` from this kit into the target repo's `.github/workflows/` to give any
 project the same CI dev-pipeline. It's stack-agnostic and additive.
 
+### Fleet rollout — CI on every tracked repo at once
+
+`rollout-ci.sh` reads `_config/registry.md` and opens a CI PR on every tracked repo
+(skips forks, empty repos, and repos that already have `ci.yml`). Needs the `gh` CLI
+authenticated with repo scope.
+
+```bash
+workspaces/command-center/kit/rollout-ci.sh --dry-run   # preview
+workspaces/command-center/kit/rollout-ci.sh             # open a PR per repo
+workspaces/command-center/kit/rollout-ci.sh --direct    # commit straight to default branch
+```
+
 ## Install (from inside the target repo)
 ```bash
 curl -fsSL https://raw.githubusercontent.com/blackpwnguin/icm-enhanced/master/workspaces/command-center/kit/install.sh | bash
