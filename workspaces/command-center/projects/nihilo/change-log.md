@@ -4,6 +4,10 @@ Project-wide timeline, newest first.
 
 <!-- Curator prepends entries above this line -->
 
+## 2026-07-13 — Fixed finance sort feedback, build 39 (v1.27) [ios, ux, bugfix] (PR #13)
+  ↳ Client-financials/Customers sort was wired but invisible on sparse data; now each row trailing value tracks the active sort (Owes/Spent/Orders/Name), ties break by name, list animates. PR #13 CI green, merged, external assigned; Beta review re-submit pending Apple daily limit reset (3 builds same day).
+
+
 ## 2026-07-13 — Owner finance UX shipped as build 38 (v1.27) [ios, ux, release] (PR #12)
   ↳ Customers tab now a finance hub (Outstanding/Paid/Billed summary + sort by Owes/Spent/Orders/Name + per-row balance from server receivables); Home "clients who owe" top-3 quick list; customer detail leads with balance owed + one-tap Record payment. PR #12 CI green (real Swift 6), merged to main, assigned internal+external, Beta review submitted.
 
