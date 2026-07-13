@@ -4,6 +4,10 @@ Project-wide timeline, newest first.
 
 <!-- Curator prepends entries above this line -->
 
+## 2026-07-13 — Owner/manager web dashboard live [web, dashboard, release]
+  ↳ Next.js dashboard in dashboard/ over the same Supabase backend + RLS; password sign-in (owner/manager only). Overview (finances + aging), Customers (sortable aging table), Orders, Inventory. Deployed to Vercel: https://dashboard-two-rosy-98.vercel.app . Reuses get_org_aging.
+
+
 ## 2026-07-13 — Finance depth pt.2 (statements/period/credit), build 42 (v1.29) [ios, finance, release] (PR #16)
   ↳ send-statement edge function (statement/reminder + Stripe pay link); Reports Month/Quarter/Year/All period scoping (Order.createdAt); edit customer payment terms + credit limit with order-time credit warning. Completes all 5 finance features. Next: desktop web dashboard.
 
