@@ -4,6 +4,10 @@ Project-wide timeline, newest first.
 
 <!-- Curator prepends entries above this line -->
 
+## 2026-07-13 — Finance depth pt.2 (statements/period/credit), build 42 (v1.29) [ios, finance, release] (PR #16)
+  ↳ send-statement edge function (statement/reminder + Stripe pay link); Reports Month/Quarter/Year/All period scoping (Order.createdAt); edit customer payment terms + credit limit with order-time credit warning. Completes all 5 finance features. Next: desktop web dashboard.
+
+
 ## 2026-07-13 — Finance depth pt.1: AR aging + per-customer ledger, build 41 (v1.28) [ios, finance, release] (PR #15)
   ↳ Migrations: customers payment_terms_days + credit_limit; get_org_aging RPC (FIFO, buckets Current/1-30/31-60/61-90/90+). iOS: aging bar on Customers hub, per-customer aging breakdown + Payments/Invoices history. Features 1-2 of 5; next: statements/reminders, period scoping, credit warnings, then desktop web dashboard.
 
