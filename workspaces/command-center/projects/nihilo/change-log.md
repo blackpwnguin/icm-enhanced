@@ -4,6 +4,10 @@ Project-wide timeline, newest first.
 
 <!-- Curator prepends entries above this line -->
 
+## 2026-07-13 — Fixed order status advance revert, build 40 (v1.27) [ios, bugfix] (PR #14)
+  ↳ App order pipeline disagreed with backend set_order_status matrix (packed vs preparing order); advancing a packed order reverted. Reordered OrderStatus to placed->preparing->packed->shipped->arrived to match backend. PR #14 CI green, merged, external assigned.
+
+
 ## 2026-07-13 — Fixed finance sort feedback, build 39 (v1.27) [ios, ux, bugfix] (PR #13)
   ↳ Client-financials/Customers sort was wired but invisible on sparse data; now each row trailing value tracks the active sort (Owes/Spent/Orders/Name), ties break by name, list animates. PR #13 CI green, merged, external assigned; Beta review re-submit pending Apple daily limit reset (3 builds same day).
 
