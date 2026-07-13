@@ -4,6 +4,10 @@ Project-wide timeline, newest first.
 
 <!-- Curator prepends entries above this line -->
 
+## 2026-07-13 — Merged Swift 6 PR #11 + shipped build 37 [ios, release] (main ac44b90)
+  ↳ PR #11 merged to main; build 37 (v1.26) archived clean in Release/Swift 6, uploaded, assigned internal+external, Beta App Review submitted (201). Data layer now routes every Postgrest .execute() through nonisolated PG helpers; CI compiles in real Swift 6; supabase-swift pinned 2.46.0. Handoff notes in stowed repo docs/HANDOFF.md.
+
+
 ## 2026-07-13 — Shipped build 36 (Universal Links) + Swift 6 hardening PR [ios, ci, release] (PR #11)
   ↳ build 36 / v1.26 to TestFlight (internal + external, Beta App Review submitted); AASA verified HTTP 200 + application/json after fixing Vercel Bot-Protection (Challenge -> Log); Supabase auth redirect allow-list updated. PR #11: pin supabase-swift 2.46.0 + commit Package.resolved, remove CI SWIFT_VERSION=5 override (real Swift 6 compile), fix xcodegen stripping the associated-domains entitlement.
 
