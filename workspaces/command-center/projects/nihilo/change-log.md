@@ -4,6 +4,10 @@ Project-wide timeline, newest first.
 
 <!-- Curator prepends entries above this line -->
 
+## 2026-07-13 — Finance depth pt.1: AR aging + per-customer ledger, build 41 (v1.28) [ios, finance, release] (PR #15)
+  ↳ Migrations: customers payment_terms_days + credit_limit; get_org_aging RPC (FIFO, buckets Current/1-30/31-60/61-90/90+). iOS: aging bar on Customers hub, per-customer aging breakdown + Payments/Invoices history. Features 1-2 of 5; next: statements/reminders, period scoping, credit warnings, then desktop web dashboard.
+
+
 ## 2026-07-13 — Fixed order status advance revert, build 40 (v1.27) [ios, bugfix] (PR #14)
   ↳ App order pipeline disagreed with backend set_order_status matrix (packed vs preparing order); advancing a packed order reverted. Reordered OrderStatus to placed->preparing->packed->shipped->arrived to match backend. PR #14 CI green, merged, external assigned.
 
